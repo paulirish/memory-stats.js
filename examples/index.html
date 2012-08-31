@@ -1,0 +1,29 @@
+<!doctype html><title>Minimal tQuery Page</title>
+<script src="http://benvanik.github.com/WebGL-Inspector/core/embed.js"></script>
+
+<script src="../../../build/tquery-bundle.js"></script>
+
+<script src="../../statsplus/statsmemory.js"></script>
+<script src="../../statsplus/statsdelay.js"></script>
+<script src="../../statsplus/statsthreejswebgl.js"></script>
+<script src="../../statsplus/tquery.statsplus.js"></script>
+
+<body onload='onLoad()'>
+<script>
+// load by require.js to get the timer ? doesnt seems to work
+function onLoad(){
+	var world	= tQuery.createWorld().boilerplate().start();
+	var object	= tQuery.createTorus().addTo(world);
+	var object	= tQuery.createTorus().addTo(world);
+	var object	= tQuery.createTorus().addTo(world);
+	var object	= tQuery.createTorus().addTo(world);
+	var object	= tQuery.createTorus().addTo(world);
+	var object	= tQuery.createTorus().addTo(world);
+	var object	= tQuery.createTorus().addTo(world);
+	var object	= tQuery.createTorus().addTo(world);
+	var object	= tQuery.createTorus().addTo(world);
+	var object	= tQuery.createTorus().addTo(world);
+
+	world.enableStatsPlus();
+}
+</script></body>
