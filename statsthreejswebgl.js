@@ -34,7 +34,7 @@ var StatsThreejsWebgl = function (){
 		domElement: container,
 
 		update: function(webGLRenderer){
-			
+			// sanity check
 			console.assert(webGLRenderer instanceof THREE.WebGLRenderer)
 
 			// refresh only 30time per second
@@ -44,7 +44,7 @@ var StatsThreejsWebgl = function (){
 			var i	= 0;
 			msTexts[i++].textContent = "== Memory =====";
 			msTexts[i++].textContent = "Programs: "	+ webGLRenderer.info.memory.programs;
-			msTexts[i++].textContent = "Geometries: "	+ webGLRenderer.info.memory.geometries;
+			msTexts[i++].textContent = "Geometries: "+webGLRenderer.info.memory.geometries;
 			msTexts[i++].textContent = "Textures: "	+ webGLRenderer.info.memory.textures;
 
 			msTexts[i++].textContent = "== Render ======";

@@ -1,0 +1,165 @@
+<html>
+<head><title>Incremental GC Example</title></head>
+
+<body onload="onload()" onunload="onunload()">
+
+<script>
+var delays = [];
+var numSamples = 500;
+var sampleIndex = 0;
+var sampleTime = 16;
+var border = 10;
+
+var garbage = [];
+var garbageSize = 1024 * 1024 * 6;
+var garbageIndex = 0;
+
+var stopped = 0;
+
+function makeGarbage(amt)
+{
+    for (var i = 0; i < amt; i++) {
+        garbage[garbageIndex++] = new Object();
+        if (garbageIndex == garbageSize)
+            garbageIndex = 0;
+    }
+}
+
+function xpos(index)
+{
+    return border + index * 2;
+}
+
+function ypos(delay)
+{
+    var r = 525 - Math.log(delay) * 64;
+    if (r < 5) return 5;
+    return r;
+}
+
+function drawScale(delay)
+{
+    ctx.fillStyle = 'rgb(150,150,150)';
+    ctx.strokeStyle = 'rgb(150,150,150)';
+    ctx.fillText(''+delay+'ms', xpos(numSamples) + 4, ypos(delay) + 3);
+
+    ctx.beginPath();
+    ctx.moveTo(xpos(0), ypos(delay));
+    ctx.lineTo(xpos(numSamples), ypos(delay));
+    ctx.stroke();
+    ctx.strokeStyle = 'rgb(0,0,0)';
+    ctx.fillStyle = 'rgb(0,0,0)';
+}
+
+function drawGraph()
+{
+    ctx.clearRect(0, 0, 1100, 550);
+
+    drawScale(10);
+    drawScale(20);
+    drawScale(30);
+    drawScale(50);
+    drawScale(100);
+    drawScale(200);
+    drawScale(400);
+    drawScale(800);
+
+    var worst = 0, worstpos = 0;
+    ctx.beginPath();
+    for (var i = 0; i < numSamples; i++) {
+        ctx.lineTo(xpos(i), ypos(delays[i]));
+        if (delays[i] >= worst) {
+            worst = delays[i];
+            worstpos = i;
+        }
+    }
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgb(255,0,0)';
+    if (worst)
+        ctx.fillText(''+worst+'ms', xpos(worstpos) - 10, ypos(worst) - 14);
+
+    ctx.beginPath();
+    var where = sampleIndex % numSamples;
+    ctx.arc(xpos(where), ypos(delays[where]), 5, 0, Math.PI*2, true);
+    ctx.fill();
+    ctx.fillStyle = 'rgb(0,0,0)';
+
+    ctx.fillText('Time', 550, 420);
+    ctx.save();
+    ctx.rotate(Math.PI/2);
+    ctx.fillText('Pause between frames', 180, -1060);
+    ctx.restore();
+}
+
+function stopstart()
+{
+    if (stopped) {
+        window.requestAnimationFrame(handler);
+        prev = Date.now();
+        start += prev - stopped;
+        document.getElementById('stop').value = 'Stop';
+        stopped = 0;
+    } else {
+        document.getElementById('stop').value = 'Start';
+        stopped = Date.now();
+    }
+}
+
+function handler(timestamp)
+{
+    if (stopped)
+        return;
+
+    //makeGarbage(0.5 * 1024);
+    makeGarbage(8 * 1024);
+//console.log('timestamp', timestamp)
+
+//    var elt = document.getElementById('data');
+    //timestamp   = performance.webkitNow();
+    timestamp   = Date.now();
+
+    var delay = timestamp - prev;
+    prev = timestamp;
+
+    var t = timestamp - start;
+    var newIndex = Math.round(t / sampleTime);
+    while (sampleIndex < newIndex) {
+	sampleIndex++;
+        delays[sampleIndex % numSamples] = delay;
+    }
+    drawGraph();
+    //console.log('delay', delay)
+    window.requestAnimationFrame(handler);
+}
+
+function onunload()
+{
+    garbage = null;
+}
+
+function onload()
+{
+    for (var i = 0; i < numSamples; i++)
+        delays[i] = 0;
+
+    var requestAnimationFrame =
+        window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+        window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+    window.requestAnimationFrame = requestAnimationFrame;
+
+    //start = prev = performance.webkitNow();//Date.now();
+    start = prev = Date.now();
+    canvas = document.getElementById('graph');
+    ctx = canvas.getContext('2d');
+    window.requestAnimationFrame(handler);
+}
+</script>
+
+<canvas id="graph" width="1080" height="550"></canvas>
+
+<p>
+<input type="button" id="stop" value="Stop" onclick="stopstart()"></input>
+
+</body>
+</html>

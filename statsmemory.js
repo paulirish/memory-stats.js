@@ -35,14 +35,22 @@ var StatsMemory = function (){
 
 	}
 
-	var updateGraph = function ( dom, value ) {
+	var updateGraph = function ( dom, height, color ) {
 
 		var child = dom.appendChild( dom.firstChild );
-		child.style.height = value + 'px';
+		child.style.height = height + 'px';
+		if( color ) child.style.backgroundColor = color;
 
 	}
 
+	// sanity check	
+	if( window.performance.memory.totalJSHeapSize === 0 ){
+		// open -a "/Applications/Google Chrome.app" --args --enable-memory-info
+		console.warn('totalJSHeapSize === 0... have you enabled --enable-memory-info ?')
+	}
+
 	var lastTime	= Date.now();
+	var lastUsedHeap= window.performance.memory.usedJSHeapSize;
 	return {
 		domElement: container,
 
@@ -51,24 +59,27 @@ var StatsMemory = function (){
 			// refresh only 30time per second
 			if( Date.now() - lastTime < 1000/30 )	return;
 			lastTime	= Date.now()
+
+			var delta	= window.performance.memory.usedJSHeapSize - lastUsedHeap;
+			lastUsedHeap	= window.performance.memory.usedJSHeapSize;
+			var color	= delta < 0 ? '#830' : '#131';
 			
 			var ms	= window.performance.memory.usedJSHeapSize
-
 			msMin	= Math.min( msMin, ms );
 			msMax	= Math.max( msMax, ms );
-			msText.textContent = "Mem: " + bytesToSize(ms);
+			msText.textContent = "Mem: " + bytesToSize(ms, 2);
 			
 			var normValue	= ms / (30*1024*1024);
-			updateGraph( msGraph, Math.min( 30, 30 - normValue * 30 ) );
+			var height	= Math.min( 30, 30 - normValue * 30 );
+			updateGraph( msGraph, height, color);
 			
-			function bytesToSize(bytes) {
+			function bytesToSize( bytes, nFractDigit ){
 				var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
 				if (bytes == 0) return 'n/a';
-				
-				var precision	= 100;
-				bytes		*= precision;
+				nFractDigit	= nFractDigit !== undefined ? nFractDigit : 0;
+				var precision	= Math.pow(10, nFractDigit);
 				var i 		= Math.floor(Math.log(bytes) / Math.log(1024));
-				return Math.round(bytes / Math.pow(1024, i))/precision + ' ' + sizes[i];
+				return Math.round(bytes*precision / Math.pow(1024, i))/precision + ' ' + sizes[i];
 			};
 		}
 
