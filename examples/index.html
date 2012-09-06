@@ -26,24 +26,19 @@ function onLoad(){
 
 
 	world.enableStatsPlus();
-	
+
+	// #### How to handle autoscaling
+	// - important for stuff for memory or other measure which can grow a lot
 	// - store all the values currently visible
 	// - there is a min and a max among those values
 	// - update the scale IIF new value wouldnt be visible
 	// - updating scale implies to redraw every column
 	
-	// - should i pass to canvas2d ?
+	// #### should i pass to canvas2d ?
 	// - more flexible
 	// - currently only limited to one histo per gfx
 	// - i could do more with canvas2d
 	// - visu ala example-pause
-	
-	/**
-	 * How to handle autoscaling 
-	 * * important especially for memory
-	 *
-	 * ### Algo
-	*/
 
 	// generate plenty of objects
 	// from example-pause.html in generation GC from firefox

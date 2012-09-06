@@ -7,7 +7,7 @@ tQuery.World.register('enableStatsPlus', function(){
 	statsWebGL.domElement.style.bottom	= (47*2)+'px';
 	document.body.appendChild( statsWebGL.domElement );
 	world.loop().hook(function(){
-	    statsWebGL.update(world.tRenderer());
+		statsWebGL.update(world.tRenderer());
 	});
 
 	var statsMemory	= new StatsMemory();
@@ -16,7 +16,7 @@ tQuery.World.register('enableStatsPlus', function(){
 	statsMemory.domElement.style.bottom	= (47*1)+'px';
 	document.body.appendChild( statsMemory.domElement );
 	world.loop().hook(function(){
-	    statsMemory.update();
+		statsMemory.update();
 	});
 
 	var statsDelay	= new StatsDelay();
@@ -24,9 +24,8 @@ tQuery.World.register('enableStatsPlus', function(){
 	statsDelay.domElement.style.right	= '0px';
 	statsDelay.domElement.style.bottom	= '0px';
 	document.body.appendChild( statsDelay.domElement );
-
 	world.loop().hook(function(){
-	    statsDelay.update();
+		statsDelay.update();
 	});
 	
 	return this;	// for chained API
