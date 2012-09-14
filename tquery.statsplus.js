@@ -1,4 +1,4 @@
-tQuery.World.register('enableStatsPlus', function(){
+tQuery.World.registerInstance('enableStatsPlus', function(){
 	var world	= this;
 	
 	var statsWebGL	= new StatsThreejsWebgl();
