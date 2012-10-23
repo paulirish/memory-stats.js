@@ -13,17 +13,12 @@
 // load by require.js to get the timer ? doesnt seems to work
 function onLoad(){
 	var world	= tQuery.createWorld().boilerplate().start();
-	var object	= tQuery.createTorus().addTo(world);
-	var object	= tQuery.createTorus().addTo(world);
-	var object	= tQuery.createTorus().addTo(world);
-	var object	= tQuery.createTorus().addTo(world);
-	var object	= tQuery.createTorus().addTo(world);
-	var object	= tQuery.createTorus().addTo(world);
-	var object	= tQuery.createTorus().addTo(world);
-	var object	= tQuery.createTorus().addTo(world);
-	var object	= tQuery.createTorus().addTo(world);
-	var object	= tQuery.createTorus().addTo(world);
-
+	for(var i = 0; i < 10; i++){
+		var object	= tQuery.createTorus().addTo(world);
+		object.positionX(Math.random()*2-1)	
+		object.positionY(Math.random()*2-1)	
+		object.positionZ(Math.random()*2-1)	
+	}
 
 	world.enableStatsPlus();
 
