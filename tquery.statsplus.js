@@ -6,7 +6,7 @@ tQuery.World.registerInstance('enableStatsPlus', function(){
 	statsWebGL.domElement.style.right	= '0px';
 	statsWebGL.domElement.style.bottom	= (47*2)+'px';
 	document.body.appendChild( statsWebGL.domElement );
-	world.loop().hook(function(){
+	world.hook(function(){
 		statsWebGL.update(world.tRenderer());
 	});
 
@@ -15,7 +15,7 @@ tQuery.World.registerInstance('enableStatsPlus', function(){
 	statsMemory.domElement.style.right	= '0px';
 	statsMemory.domElement.style.bottom	= (47*1)+'px';
 	document.body.appendChild( statsMemory.domElement );
-	world.loop().hook(function(){
+	world.hook(function(){
 		statsMemory.update();
 	});
 
@@ -24,7 +24,7 @@ tQuery.World.registerInstance('enableStatsPlus', function(){
 	statsDelay.domElement.style.right	= '0px';
 	statsDelay.domElement.style.bottom	= '0px';
 	document.body.appendChild( statsDelay.domElement );
-	world.loop().hook(function(){
+	world.hook(function(){
 		statsDelay.update();
 	});
 	

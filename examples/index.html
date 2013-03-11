@@ -47,7 +47,7 @@ function onLoad(){
 			garbageIdx	= (garbageIdx+1) % garbageSize;
 		}
 	}
-	world.loop().hook(function(){
+	world.hook(function(){
 		makeGarbage(1024)
 	})
 }
