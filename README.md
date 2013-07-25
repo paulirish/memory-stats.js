@@ -1,0 +1,1 @@
+obsoleted, prefere THREEx.RendererStats
