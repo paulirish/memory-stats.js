@@ -48,13 +48,14 @@ var StatsMemory = function (){
 		performance.memory = { usedJSHeapSize : 0 };
 	}
 
-	// sanity check	- 
+	// support of the API?
 	if( performance.memory.totalJSHeapSize === 0 ){
-		// open -a "/Applications/Google Chrome.app" --args --enable-precise-memory-info
 		console.warn('totalJSHeapSize === 0... performance.memory is only available in Chrome .')
 	}
+	
 	// TODO, add a sanity check to see if values are bucketed.
-	// (use --enable-precise-memory-info) reminder
+	// If so, reminde user to adopt the --enable-precise-memory-info flag.
+	// open -a "/Applications/Google Chrome.app" --args --enable-precise-memory-info
 
 	var lastTime	= Date.now();
 	var lastUsedHeap= performance.memory.usedJSHeapSize;
