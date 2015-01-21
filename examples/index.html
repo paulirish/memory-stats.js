@@ -1,39 +1,25 @@
-<!doctype html><title>Minimal tQuery Page</title>
-<!-- <script src="http://benvanik.github.com/WebGL-Inspector/core/embed.js"></script>
- -->
-<script src="../../../build/tquery-bundle.js"></script>
+<!doctype html>
+<title>memory-stats.js demo</title>
 
-<script src="../../statsplus/statsmemory.js"></script>
-<script src="../../statsplus/statsdelay.js"></script>
-<script src="../../statsplus/statsthreejswebgl.js"></script>
-<script src="../../statsplus/tquery.statsplus.js"></script>
+<script src="../statsmemory.js"></script>
 
 <body onload='onLoad()'>
 <script>
 // load by require.js to get the timer ? doesnt seems to work
 function onLoad(){
-	var world	= tQuery.createWorld().boilerplate().start();
-	for(var i = 0; i < 10; i++){
-		var object	= tQuery.createTorus().addTo(world);
-		object.positionX(Math.random()*2-1)	
-		object.positionY(Math.random()*2-1)	
-		object.positionZ(Math.random()*2-1)	
-	}
-
-	world.enableStatsPlus();
-
-	// #### How to handle autoscaling
-	// - important for stuff for memory or other measure which can grow a lot
-	// - store all the values currently visible
-	// - there is a min and a max among those values
-	// - update the scale IIF new value wouldnt be visible
-	// - updating scale implies to redraw every column
 	
-	// #### should i pass to canvas2d ?
-	// - more flexible
-	// - currently only limited to one histo per gfx
-	// - i could do more with canvas2d
-	// - visu ala example-pause
+	var statsMemory	= new StatsMemory();
+	statsMemory.domElement.style.position	= 'absolute';
+	statsMemory.domElement.style.right	= '0px';
+	statsMemory.domElement.style.bottom	= (47*1)+'px';
+	document.body.appendChild( statsMemory.domElement );
+	
+
+	requestAnimationFrame(function rAFloop(){
+		statsMemory.update();
+		requestAnimationFrame(rAFloop);
+	});
+
 
 	// generate plenty of objects
 	// from example-pause.html in generation GC from firefox
@@ -47,8 +33,9 @@ function onLoad(){
 			garbageIdx	= (garbageIdx+1) % garbageSize;
 		}
 	}
-	world.hook(function(){
+	requestAnimationFrame(function rAFloop(){
 		makeGarbage(1024)
-	})
+		requestAnimationFrame(rAFloop);
+	});
 }
 </script></body>
