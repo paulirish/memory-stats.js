@@ -1,19 +1,19 @@
 <!doctype html>
-<title>memory-stats.js demo</title>
 
+<title>memory-stats.js demo</title>
 <script src="../statsmemory.js"></script>
 
-<body onload='onLoad()'>
+<body>
 <script>
-// load by require.js to get the timer ? doesnt seems to work
-function onLoad(){
-	
+
+	// add the monitor into our page and update it on a rAF loop
+
 	var statsMemory	= new StatsMemory();
-	statsMemory.domElement.style.position	= 'absolute';
-	statsMemory.domElement.style.right	= '0px';
-	statsMemory.domElement.style.bottom	= (47*1)+'px';
+	statsMemory.domElement.style.position	= 'fixed';
+	statsMemory.domElement.style.right		= '0px';
+	statsMemory.domElement.style.bottom		= '0px';
 	document.body.appendChild( statsMemory.domElement );
-	
+
 
 	requestAnimationFrame(function rAFloop(){
 		statsMemory.update();
@@ -21,8 +21,13 @@ function onLoad(){
 	});
 
 
+
+
+
+
 	// generate plenty of objects
-	// from example-pause.html in generation GC from firefox
+	// from in generational GC demo from firefox
+	// https://people.mozilla.org/~wmccloskey/incremental-blog/example-pause.html
 	var garbage 	= [];
 	var garbageSize	= 1024 * 1024 * 6;
 	var garbageIdx	= 0;
@@ -37,5 +42,5 @@ function onLoad(){
 		makeGarbage(1024)
 		requestAnimationFrame(rAFloop);
 	});
-}
+
 </script></body>
