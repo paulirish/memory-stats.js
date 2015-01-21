@@ -1,8 +1,9 @@
 /**
  * @author mrdoob / http://mrdoob.com/
  * @author jetienne / http://jetienne.com/
+ * @author paulirish / http://paulirish.com/
  */
-var StatsMemory = function (){
+var MemoryStats = function (){
 
 	var msMin	= 100;
 	var msMax	= 0;

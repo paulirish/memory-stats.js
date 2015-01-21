@@ -1,22 +1,22 @@
 <!doctype html>
 
 <title>memory-stats.js demo</title>
-<script src="../statsmemory.js"></script>
+<script src="../memory-stats.js"></script>
 
 <body>
 <script>
 
 	// add the monitor into our page and update it on a rAF loop
 
-	var statsMemory	= new StatsMemory();
-	statsMemory.domElement.style.position	= 'fixed';
-	statsMemory.domElement.style.right		= '0px';
-	statsMemory.domElement.style.bottom		= '0px';
-	document.body.appendChild( statsMemory.domElement );
+	var stats = new MemoryStats();
+	stats.domElement.style.position	= 'fixed';
+	stats.domElement.style.right		= '0px';
+	stats.domElement.style.bottom		= '0px';
+	document.body.appendChild( stats.domElement );
 
 
 	requestAnimationFrame(function rAFloop(){
-		statsMemory.update();
+		stats.update();
 		requestAnimationFrame(rAFloop);
 	});
 
