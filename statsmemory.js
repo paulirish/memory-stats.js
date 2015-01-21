@@ -43,21 +43,21 @@ var StatsMemory = function (){
 
 	}
 
-	// create an alias in case `window.performance.memory` isnt supported 
-	if( window.performance && window.performance.memory ){
-		var memory	= window.performance.memory;
-	}else{
-		var memory	= { usedJSHeapSize : 0 };
+	// polyfill usedJSHeapSize
+	if (window.performance && !performance.memory){
+		performance.memory = { usedJSHeapSize : 0 };
 	}
 
 	// sanity check	- 
-	if( memory.totalJSHeapSize === 0 ){
-		// open -a "/Applications/Google Chrome.app" --args --enable-memory-info
-		console.warn('totalJSHeapSize === 0... for chrome use --enable-memory-info. other browsers dont have this feature.')
+	if( performance.memory.totalJSHeapSize === 0 ){
+		// open -a "/Applications/Google Chrome.app" --args --enable-precise-memory-info
+		console.warn('totalJSHeapSize === 0... performance.memory is only available in Chrome .')
 	}
+	// TODO, add a sanity check to see if values are bucketed.
+	// (use --enable-precise-memory-info) reminder
 
 	var lastTime	= Date.now();
-	var lastUsedHeap= memory.usedJSHeapSize;
+	var lastUsedHeap= performance.memory.usedJSHeapSize;
 	return {
 		domElement: container,
 
@@ -67,11 +67,11 @@ var StatsMemory = function (){
 			if( Date.now() - lastTime < 1000/30 )	return;
 			lastTime	= Date.now()
 
-			var delta	= memory.usedJSHeapSize - lastUsedHeap;
-			lastUsedHeap	= memory.usedJSHeapSize;
+			var delta	= performance.memory.usedJSHeapSize - lastUsedHeap;
+			lastUsedHeap	= performance.memory.usedJSHeapSize;
 			var color	= delta < 0 ? '#830' : '#131';
 			
-			var ms	= memory.usedJSHeapSize
+			var ms	= performance.memory.usedJSHeapSize;
 			msMin	= Math.min( msMin, ms );
 			msMax	= Math.max( msMax, ms );
 			msText.textContent = "Mem: " + bytesToSize(ms, 2);
