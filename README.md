@@ -32,5 +32,7 @@ That might look something like:
 
 Run Chrome with the flag and open `demo/index.html` to see it in action.
 
+# Framework adaptors
 
-This project was adapted into an Angular component by [@livingobjects](https://github.com/livingobjects): https://github.com/livingobjects/angular-memory-stats
+* Angular component by [@livingobjects](https://github.com/livingobjects): https://github.com/livingobjects/angular-memory-stats
+* Ember addon by [@stefanpenner](https://github.com/stefanpenner): https://github.com/stefanpenner/ember-browser-stats
