@@ -36,3 +36,5 @@ Run Chrome with the flag and open `demo/index.html` to see it in action.
 
 * Angular component by [@livingobjects](https://github.com/livingobjects): https://github.com/livingobjects/angular-memory-stats
 * Ember addon by [@stefanpenner](https://github.com/stefanpenner): https://github.com/stefanpenner/ember-browser-stats
+* Rails gem by [@jurre](https://github.com/jurre):
+https://github.com/jurre/memory-stats-js-rails
