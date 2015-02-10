@@ -1,0 +1,20 @@
+{
+  "name": "memory-stats",
+  "main": "memory-stats.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/nsisodiya/memory-stats.js",
+  "authors": [
+    "Paul Irish <paul.irish@gmail.com>"
+  ],
+  "description": "Minimal monitor for JS Heap Size via performance.memory",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "performance",
+    "memory",
+    "chrome"
+  ],
+  "license": "MIT"
+}
