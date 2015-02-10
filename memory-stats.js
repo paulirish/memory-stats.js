@@ -53,7 +53,7 @@ var MemoryStats = function (){
 	if( performance.memory.totalJSHeapSize === 0 ){
 		console.warn('totalJSHeapSize === 0... performance.memory is only available in Chrome .')
 	}
-	
+
 	// TODO, add a sanity check to see if values are bucketed.
 	// If so, reminde user to adopt the --enable-precise-memory-info flag.
 	// open -a "/Applications/Google Chrome.app" --args --enable-precise-memory-info
@@ -72,16 +72,16 @@ var MemoryStats = function (){
 			var delta	= performance.memory.usedJSHeapSize - lastUsedHeap;
 			lastUsedHeap	= performance.memory.usedJSHeapSize;
 			var color	= delta < 0 ? '#830' : '#131';
-			
+
 			var ms	= performance.memory.usedJSHeapSize;
 			msMin	= Math.min( msMin, ms );
 			msMax	= Math.max( msMax, ms );
 			msText.textContent = "Mem: " + bytesToSize(ms, 2);
-			
+
 			var normValue	= ms / (30*1024*1024);
 			var height	= Math.min( 30, 30 - normValue * 30 );
 			updateGraph( msGraph, height, color);
-			
+
 			function bytesToSize( bytes, nFractDigit ){
 				var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
 				if (bytes == 0) return 'n/a';
@@ -93,5 +93,9 @@ var MemoryStats = function (){
 		}
 
 	}
-	
+
 };
+
+if (module && module.exports) {
+	module.exports = MemoryStats;
+}
