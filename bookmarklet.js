@@ -14,5 +14,5 @@ script.onload = function() {
         requestAnimationFrame(rAFloop);
     });
 };
-script.src = "https://rawgit.com/paulirish/memory-stats.js/master/memory-stats.js";
+script.src = "https://cdn.rawgit.com/paulirish/memory-stats.js/b2fde44a6279d72dd272c04a01d1f67327906188/memory-stats.js";
 document.getElementsByTagName('head')[0].appendChild(script);
