@@ -1,5 +1,4 @@
 (function() {
-	var module;
 	var script = document.createElement('script');
 	script.onload = function() {
 	  var stats = new MemoryStats();
@@ -16,5 +15,5 @@
 	    });
 	};
 	script.src = "https://rawgit.com/paulirish/memory-stats.js/master/memory-stats.js";
-	document.getElementsByTagName('head')[0].appendChild(script);
+	document.head.appendChild(script);
 }})();
