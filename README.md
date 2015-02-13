@@ -38,3 +38,11 @@ Run Chrome with the flag and open `demo/index.html` to see it in action.
 * Ember addon by [@stefanpenner](https://github.com/stefanpenner): https://github.com/stefanpenner/ember-browser-stats
 * Rails gem by [@jurre](https://github.com/jurre):
 https://github.com/jurre/memory-stats-js-rails
+
+# Bookmarklet
+
+You can add this code to any page using the following bookmarklet:
+
+```js
+javascript:(function(){var script=document.createElement('script');script.src='https://rawgit.com/paulirish/memory-stats.js/master/bookmarklet.js';document.head.appendChild(script);})()
+```
