@@ -6,6 +6,7 @@
 	    stats.domElement.style.position = 'fixed';
 	    stats.domElement.style.right        = '0px';
 	    stats.domElement.style.bottom       = '0px';
+	    stats.domElement.style.zIndex       = '1000';
 
 	    document.body.appendChild( stats.domElement );
 
