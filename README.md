@@ -39,6 +39,7 @@ Run Chrome with the flag and open `demo/index.html` to see it in action.
 * Rails gem by [@jurre](https://github.com/jurre):
 https://github.com/jurre/memory-stats-js-rails
 * Polymer element by [@ragingwind](https://github.com/ragingwind): https://github.com/ragingwind/polymer-memory-stats
+* Gulp plugin by [@tshaddix](https://github.com/tshaddix): https://github.com/tshaddix/gulp-memory-stats
 
 # Bookmarklet
 
