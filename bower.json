@@ -1,10 +1,10 @@
 {
   "name": "memory-stats",
   "main": "memory-stats.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/nsisodiya/memory-stats.js",
   "authors": [
-    "Paul Irish <paul.irish@gmail.com>"
+    "Paul Irish"
   ],
   "description": "Minimal monitor for JS Heap Size via performance.memory",
   "moduleType": [
