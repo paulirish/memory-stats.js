@@ -46,7 +46,7 @@ var MemoryStats = function (){
 
 	// polyfill usedJSHeapSize
 	if (window.performance && !performance.memory){
-		performance.memory = { usedJSHeapSize : 0 };
+		performance.memory = { usedJSHeapSize : 0, totalJSHeapSize : 0 };
 	}
 
 	// support of the API?
