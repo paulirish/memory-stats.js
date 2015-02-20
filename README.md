@@ -38,6 +38,7 @@ Run Chrome with the flag and open `demo/index.html` to see it in action.
 * Ember addon by [@stefanpenner](https://github.com/stefanpenner): https://github.com/stefanpenner/ember-browser-stats
 * Rails gem by [@jurre](https://github.com/jurre):
 https://github.com/jurre/memory-stats-js-rails
+* Polymer element by [@ragingwind](https://github.com/ragingwind): https://github.com/ragingwind/polymer-memory-stats
 
 # Bookmarklet
 
