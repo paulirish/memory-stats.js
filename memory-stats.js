@@ -7,6 +7,9 @@ var MemoryStats = function (){
 
 	var msMin	= 100;
 	var msMax	= 0;
+	var redrawMBThreshold = 30;
+	var redrawMBStep = 30;
+	var GRAPH_HEIGHT = 30;
 
 	var container	= document.createElement( 'div' );
 	container.id	= 'stats';
@@ -25,7 +28,7 @@ var MemoryStats = function (){
 
 	var msGraph	= document.createElement( 'div' );
 	msGraph.id	= 'msGraph';
-	msGraph.style.cssText = 'position:relative;width:74px;height:30px;background-color:#0f0';
+	msGraph.style.cssText = 'position:relative;width:74px;height:' + GRAPH_HEIGHT + 'px;background-color:#0f0';
 	msDiv.appendChild( msGraph );
 
 	while ( msGraph.children.length < 74 ) {
@@ -42,7 +45,18 @@ var MemoryStats = function (){
 		child.style.height = height + 'px';
 		if( color ) child.style.backgroundColor = color;
 
-	}
+	};
+
+	var redrawGraph = function(dom, oHFactor, hFactor) {
+		[].forEach.call(dom.children, function(c) {
+			var cHeight = c.style.height.substring(0, c.style.height.length-2);
+
+			// Convert to MB, change factor
+			var newVal = GRAPH_HEIGHT - ((GRAPH_HEIGHT - cHeight)/oHFactor) * hFactor;
+
+			c.style.height = newVal + 'px';
+		});
+	};
 
 	// polyfill usedJSHeapSize
 	if (window.performance && !performance.memory){
@@ -51,7 +65,7 @@ var MemoryStats = function (){
 
 	// support of the API?
 	if( performance.memory.totalJSHeapSize === 0 ){
-		console.warn('totalJSHeapSize === 0... performance.memory is only available in Chrome .')
+		console.warn('totalJSHeapSize === 0... performance.memory is only available in Chrome .');
 	}
 
 	// TODO, add a sanity check to see if values are bucketed.
@@ -67,7 +81,7 @@ var MemoryStats = function (){
 
 			// refresh only 30time per second
 			if( Date.now() - lastTime < 1000/30 )	return;
-			lastTime	= Date.now()
+			lastTime	= Date.now();
 
 			var delta	= performance.memory.usedJSHeapSize - lastUsedHeap;
 			lastUsedHeap	= performance.memory.usedJSHeapSize;
@@ -78,21 +92,28 @@ var MemoryStats = function (){
 			msMax	= Math.max( msMax, ms );
 			msText.textContent = "Mem: " + bytesToSize(ms, 2);
 
-			var normValue	= ms / (30*1024*1024);
-			var height	= Math.min( 30, 30 - normValue * 30 );
-			updateGraph( msGraph, height, color);
+			var mbValue	= ms / (1024*1024);
+			
+			if(mbValue > redrawMBThreshold) {
+				var factor = (mbValue - (mbValue % redrawMBStep))/ redrawMBStep;
+				var newThreshold = redrawMBStep * (factor + 1);
+				redrawGraph(msGraph, redrawMBStep/redrawMBThreshold, redrawMBStep/newThreshold);
+				redrawMBThreshold = newThreshold;
+			}
+
+			updateGraph( msGraph, GRAPH_HEIGHT-mbValue*(redrawMBStep/redrawMBThreshold), color);
 
 			function bytesToSize( bytes, nFractDigit ){
 				var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-				if (bytes == 0) return 'n/a';
+				if (bytes === 0) return 'n/a';
 				nFractDigit	= nFractDigit !== undefined ? nFractDigit : 0;
 				var precision	= Math.pow(10, nFractDigit);
 				var i 		= Math.floor(Math.log(bytes) / Math.log(1024));
 				return Math.round(bytes*precision / Math.pow(1024, i))/precision + ' ' + sizes[i];
-			};
+			}
 		}
 
-	}
+	};
 
 };
 
