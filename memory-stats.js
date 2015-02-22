@@ -33,7 +33,7 @@ var MemoryStats = function (){
 	while ( msGraph.children.length < 74 ) {
 
 		var bar = document.createElement( 'span' );
-		bar.style.cssText = 'width:1px;height:30px;float:left;background-color:#131';
+		bar.style.cssText = 'width:1px;height:' + GRAPH_HEIGHT + 'px;float:left;background-color:#131';
 		msGraph.appendChild( bar );
 
 	}
