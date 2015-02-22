@@ -7,9 +7,8 @@ var MemoryStats = function (){
 
 	var msMin	= 100;
 	var msMax	= 0;
-	var redrawMBThreshold = 30;
-	var redrawMBStep = 30;
 	var GRAPH_HEIGHT = 30;
+	var redrawMBThreshold = GRAPH_HEIGHT;
 
 	var container	= document.createElement( 'div' );
 	container.id	= 'stats';
@@ -95,13 +94,13 @@ var MemoryStats = function (){
 			var mbValue	= ms / (1024*1024);
 			
 			if(mbValue > redrawMBThreshold) {
-				var factor = (mbValue - (mbValue % redrawMBStep))/ redrawMBStep;
-				var newThreshold = redrawMBStep * (factor + 1);
-				redrawGraph(msGraph, redrawMBStep/redrawMBThreshold, redrawMBStep/newThreshold);
+				var factor = (mbValue - (mbValue % GRAPH_HEIGHT))/ GRAPH_HEIGHT;
+				var newThreshold = GRAPH_HEIGHT * (factor + 1);
+				redrawGraph(msGraph, GRAPH_HEIGHT/redrawMBThreshold, GRAPH_HEIGHT/newThreshold);
 				redrawMBThreshold = newThreshold;
 			}
 
-			updateGraph( msGraph, GRAPH_HEIGHT-mbValue*(redrawMBStep/redrawMBThreshold), color);
+			updateGraph( msGraph, GRAPH_HEIGHT-mbValue*(GRAPH_HEIGHT/redrawMBThreshold), color);
 
 			function bytesToSize( bytes, nFractDigit ){
 				var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
