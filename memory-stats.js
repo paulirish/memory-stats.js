@@ -12,7 +12,7 @@ var MemoryStats = function (){
 
 	var container	= document.createElement( 'div' );
 	container.id	= 'stats';
-	container.style.cssText = 'width:80px;opacity:0.9;cursor:pointer';
+	container.style.cssText = 'width:80px;height:48px;opacity:0.9;cursor:pointer;overflow:hidden;';
 
 	var msDiv	= document.createElement( 'div' );
 	msDiv.id	= 'ms';
