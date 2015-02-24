@@ -75,13 +75,20 @@ var MemoryStats = function (){
 		var i 		= Math.floor(Math.log(bytes) / Math.log(1024));
 		return Math.round(bytes*precision / Math.pow(1024, i))/precision + ' ' + sizes[i];
 	}
-	
+
 	// TODO, add a sanity check to see if values are bucketed.
 	// If so, remind user to adopt the --enable-precise-memory-info flag.
 	// open -a "/Applications/Google Chrome.app" --args --enable-precise-memory-info
 
 	var lastTime	= Date.now();
-	var lastUsedHeap= performance.memory.usedJSHeapSize;
+	var lastUsedHeap = performance.memory.usedJSHeapSize;
+	var delta = 0;
+	var color = "#131";
+	var ms = 0;
+	var mbValue = 0;
+	var factor = 0;
+	var newThreshold = 0;
+
 	return {
 		domElement: container,
 
@@ -91,20 +98,20 @@ var MemoryStats = function (){
 			if( Date.now() - lastTime < 1000/30 )	return;
 			lastTime	= Date.now();
 
-			var delta	= performance.memory.usedJSHeapSize - lastUsedHeap;
+			delta	= performance.memory.usedJSHeapSize - lastUsedHeap;
 			lastUsedHeap	= performance.memory.usedJSHeapSize;
-			var color	= delta < 0 ? '#830' : '#131';
+			color	= delta < 0 ? '#830' : '#131';
 
-			var ms	= performance.memory.usedJSHeapSize;
+			ms	= performance.memory.usedJSHeapSize;
 			msMin	= Math.min( msMin, ms );
 			msMax	= Math.max( msMax, ms );
 			msText.textContent = "Mem: " + bytesToSize(ms, 2);
 
-			var mbValue	= ms / (1024*1024);
+			mbValue	= ms / (1024*1024);
 			
 			if(mbValue > redrawMBThreshold) {
-				var factor = (mbValue - (mbValue % GRAPH_HEIGHT))/ GRAPH_HEIGHT;
-				var newThreshold = GRAPH_HEIGHT * (factor + 1);
+				factor = (mbValue - (mbValue % GRAPH_HEIGHT))/ GRAPH_HEIGHT;
+				newThreshold = GRAPH_HEIGHT * (factor + 1);
 				redrawGraph(msGraph, GRAPH_HEIGHT/redrawMBThreshold, GRAPH_HEIGHT/newThreshold);
 				redrawMBThreshold = newThreshold;
 			}
