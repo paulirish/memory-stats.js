@@ -31,9 +31,15 @@
 	var garbage 	= [];
 	var garbageSize	= 1024 * 1024 * 6;
 	var garbageIdx	= 0;
+
+	// call GC() from console to test a GC
+	function GC(){
+		garbage 	= [];
+		garbageIdx	= 0;
+	}
+
 	function makeGarbage(amount){
 		for(var i = 0; i < amount; i++){
-			//garbage[garbageIdx]	= new Object();
 			garbage[garbageIdx]	= {};
 			garbageIdx	= (garbageIdx+1) % garbageSize;
 		}
