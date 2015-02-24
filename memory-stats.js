@@ -67,8 +67,17 @@ var MemoryStats = function (){
 		console.warn('totalJSHeapSize === 0... performance.memory is only available in Chrome .');
 	}
 
+	function bytesToSize( bytes, nFractDigit ){
+		var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+		if (bytes === 0) return 'n/a';
+		nFractDigit	= nFractDigit !== undefined ? nFractDigit : 0;
+		var precision	= Math.pow(10, nFractDigit);
+		var i 		= Math.floor(Math.log(bytes) / Math.log(1024));
+		return Math.round(bytes*precision / Math.pow(1024, i))/precision + ' ' + sizes[i];
+	}
+	
 	// TODO, add a sanity check to see if values are bucketed.
-	// If so, reminde user to adopt the --enable-precise-memory-info flag.
+	// If so, remind user to adopt the --enable-precise-memory-info flag.
 	// open -a "/Applications/Google Chrome.app" --args --enable-precise-memory-info
 
 	var lastTime	= Date.now();
@@ -102,14 +111,7 @@ var MemoryStats = function (){
 
 			updateGraph( msGraph, GRAPH_HEIGHT-mbValue*(GRAPH_HEIGHT/redrawMBThreshold), color);
 
-			function bytesToSize( bytes, nFractDigit ){
-				var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-				if (bytes === 0) return 'n/a';
-				nFractDigit	= nFractDigit !== undefined ? nFractDigit : 0;
-				var precision	= Math.pow(10, nFractDigit);
-				var i 		= Math.floor(Math.log(bytes) / Math.log(1024));
-				return Math.round(bytes*precision / Math.pow(1024, i))/precision + ' ' + sizes[i];
-			}
+
 		}
 
 	};
