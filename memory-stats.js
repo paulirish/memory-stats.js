@@ -67,12 +67,14 @@ var MemoryStats = function (){
 		console.warn('totalJSHeapSize === 0... performance.memory is only available in Chrome .');
 	}
 
+	var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+	var precision;
+	var i;
 	function bytesToSize( bytes, nFractDigit ){
-		var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
 		if (bytes === 0) return 'n/a';
 		nFractDigit	= nFractDigit !== undefined ? nFractDigit : 0;
-		var precision	= Math.pow(10, nFractDigit);
-		var i 		= Math.floor(Math.log(bytes) / Math.log(1024));
+		precision = Math.pow(10, nFractDigit);
+		i = Math.floor(Math.log(bytes) / Math.log(1024));
 		return Math.round(bytes*precision / Math.pow(1024, i))/precision + ' ' + sizes[i];
 	}
 
@@ -94,17 +96,19 @@ var MemoryStats = function (){
 
 		update: function () {
 
-			// refresh only 30time per second
-			if( Date.now() - lastTime < 1000/30 )	return;
-			lastTime	= Date.now();
+			// update at 30fps
+			if( Date.now() - lastTime < 1000/30 ) return;
+			lastTime = Date.now();
 
-			delta	= performance.memory.usedJSHeapSize - lastUsedHeap;
-			lastUsedHeap	= performance.memory.usedJSHeapSize;
-			color	= delta < 0 ? '#830' : '#131';
+			delta = performance.memory.usedJSHeapSize - lastUsedHeap;
+			lastUsedHeap = performance.memory.usedJSHeapSize;
 
-			ms	= performance.memory.usedJSHeapSize;
-			msMin	= Math.min( msMin, ms );
-			msMax	= Math.max( msMax, ms );
+			// if memory has gone down, consider it a GC and draw a red bar.
+			color = delta < 0 ? '#830' : '#131';
+
+			ms = lastUsedHeap;
+			msMin = Math.min( msMin, ms );
+			msMax = Math.max( msMax, ms );
 			msText.textContent = "Mem: " + bytesToSize(ms, 2);
 
 			mbValue	= ms / (1024*1024);
