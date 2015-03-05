@@ -1,7 +1,7 @@
 {
   "name": "memory-stats",
   "main": "memory-stats.js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage": "https://github.com/paulirish/memory-stats.js",
   "authors": [
     "Paul Irish"
