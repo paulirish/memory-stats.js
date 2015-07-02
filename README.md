@@ -41,6 +41,7 @@ https://github.com/jurre/memory-stats-js-rails
 * Polymer element by [@ragingwind](https://github.com/ragingwind): https://github.com/ragingwind/memory-stats-element
 * Gulp plugin by [@tshaddix](https://github.com/tshaddix): https://github.com/tshaddix/gulp-memory-stats
 * Web Components element by [@jmalonzo](https://github.com/jmalonzo): https://github.com/jmalonzo/memory-stats-element
+* React Component by [@vigneshshanmugam](https://github.com/vigneshshanmugam): https://github.com/vigneshshanmugam/react-memorystats
 
 # Bookmarklet
 
